@@ -1,0 +1,859 @@
+<!doctype html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Workspace - Unified Office Suite</title>
+    <!-- We import our style sheet in index.css which loads Tailwind CSS locally -->
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body class="h-full bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition duration-300 font-sans antialiased overflow-hidden selection:bg-indigo-100 selection:text-indigo-900">
+    
+    <!-- SVG Icon Symbols Library - Zero CDs, 100% native SVG compliance -->
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol id="icon-dashboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect>
+        <rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect>
+      </symbol>
+      <symbol id="icon-ai" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+        <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5 5 3Z" opacity="0.65"></path>
+        <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1 1-2.5Z" opacity="0.65"></path>
+      </symbol>
+      <symbol id="icon-doc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"></path><path d="M14 2v4a2 2 0 0 0 2 2h4"></path>
+        <path d="M10 9H8"></path><path d="M16 13H8"></path><path d="M16 17H8"></path>
+      </symbol>
+      <symbol id="icon-pres" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="18" height="12" x="3" y="3" rx="2"></rect><path d="M3 13h18"></path>
+        <path d="m12 17 3 4H9l3-4Z"></path>
+      </symbol>
+      <symbol id="icon-sheet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="18" height="18" x="3" y="3" rx="2"></rect><path d="M3 9h18"></path><path d="M3 15h18"></path>
+        <path d="M9 3v18"></path><path d="M15 3v18"></path>
+      </symbol>
+      <symbol id="icon-letter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+      </symbol>
+      <symbol id="icon-project" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path>
+      </symbol>
+      <symbol id="icon-files" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M15.5 2H8.62a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2V5.5L15.5 2z"></path><path d="M15 2v4a1 1 0 0 0 1 1h3"></path>
+        <path d="M3 18v3a2 2 0 0 0 2 2h11"></path>
+      </symbol>
+      <symbol id="icon-star" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+      </symbol>
+      <symbol id="icon-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 5v14M5 12h14"></path>
+      </symbol>
+      <symbol id="icon-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+      </symbol>
+      <symbol id="icon-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 20h9M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"></path>
+      </symbol>
+      <symbol id="icon-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>
+      </symbol>
+      <symbol id="icon-settings" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </symbol>
+      <symbol id="icon-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"></path>
+      </symbol>
+      <symbol id="icon-upload" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path>
+      </symbol>
+      <symbol id="icon-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </symbol>
+      <symbol id="icon-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+      </symbol>
+    </svg>
+
+    <!-- Shell Container -->
+    <div id="app-shell" class="h-full flex overflow-hidden">
+      
+      <!-- Collapsible Responsive Sidebar -->
+      <aside id="sidebar" class="w-64 max-lg:w-16 bg-slate-900 text-slate-300 flex flex-col justify-between shrink-0 ease-in-out duration-300 border-r border-slate-950 z-20">
+        <!-- Logo Header -->
+        <div class="p-4 border-b border-slate-950 flex items-center gap-3 overflow-hidden">
+          <div class="p-2.5 bg-gradient-to-tr from-indigo-500 to-indigo-700 text-white rounded-lg shadow-sm">
+            <svg class="w-5 h-5 animate-pulse"><use href="#icon-ai"></use></svg>
+          </div>
+          <span id="logo-text" class="font-extrabold text-sm tracking-widest text-white whitespace-nowrap uppercase">AI Office Suite</span>
+        </div>
+
+        <!-- Navigation Menu -->
+        <nav class="flex-1 px-2 py-4 space-y-1 overflow-y-auto scrollbar-none">
+          <button id="nav-dashboard" class="nav-btn active w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-dashboard"></use></svg>
+            <span class="nav-label max-lg:hidden">Dashboard</span>
+          </button>
+          <button id="nav-assistant" class="nav-btn w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-ai"></use></svg>
+            <span class="nav-label max-lg:hidden">AI Assistant</span>
+          </button>
+          <button id="nav-documents" class="nav-btn w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-doc"></use></svg>
+            <span class="nav-label max-lg:hidden">Documents & Reports</span>
+          </button>
+          <button id="nav-presentations" class="nav-btn w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-pres"></use></svg>
+            <span class="nav-label max-lg:hidden">Presentations</span>
+          </button>
+          <button id="nav-spreadsheets" class="nav-btn w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-sheet"></use></svg>
+            <span class="nav-label max-lg:hidden">Spreadsheets</span>
+          </button>
+          <button id="nav-letters" class="nav-btn w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-letter"></use></svg>
+            <span class="nav-label max-lg:hidden">Letters</span>
+          </button>
+          <button id="nav-projects" class="nav-btn w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-project"></use></svg>
+            <span class="nav-label max-lg:hidden">Projects</span>
+          </button>
+          <button id="nav-files" class="nav-btn w-full flex items-center gap-3.5 px-3 py-2.5 text-xs font-semibold rounded-lg hover:bg-slate-800 hover:text-white transition group">
+            <svg class="w-4.5 h-4.5 text-slate-400 group-hover:text-indigo-400"><use href="#icon-files"></use></svg>
+            <span class="nav-label max-lg:hidden">Files</span>
+          </button>
+        </nav>
+
+        <!-- Sidebar footer: Indicators & Theme toggler -->
+        <div class="p-3 border-t border-slate-950 space-y-2.5 max-lg:p-1 max-lg:items-center max-lg:flex max-lg:flex-col">
+          <!-- Live Auto save status -->
+          <div class="px-2 text-[10px] text-slate-500 font-medium flex items-center gap-1.5 max-lg:hidden">
+            <span class="h-1.5 w-1.5 bg-emerald-500 rounded-full animate-ping"></span>
+            <span id="save-status">Auto-saved 10s ago</span>
+          </div>
+
+          <!-- Light / Dark controls inside sidebar -->
+          <div class="flex items-center justify-between gap-1 w-full p-1 bg-slate-950 rounded-lg max-lg:bg-transparent">
+            <!-- Theme Toggle Item -->
+            <button id="theme-toggler" type="button" class="flex-1 max-lg:w-10 max-lg:h-10 hover:bg-slate-800 p-2 text-xs text-center flex items-center justify-center gap-2 rounded-md font-semibold text-slate-300 hover:text-white cursor-pointer select-none">
+              <svg id="icon-theme-light" class="w-4.5 h-4.5 text-amber-400"><use href="#icon-copy"></use></svg>
+              <span class="max-lg:hidden">Toggle Theme</span>
+            </button>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Main Stage Area -->
+      <div class="flex-1 flex flex-col min-w-0 bg-slate-50 dark:bg-slate-950 overflow-hidden">
+        
+        <!-- Top Workspace Bar -->
+        <header class="h-14 border-b border-slate-200 dark:border-slate-850 bg-white dark:bg-slate-900 flex items-center justify-between px-6 shrink-0 z-10 transition">
+          <!-- Left side status / breadcrumbs -->
+          <div class="flex items-center gap-3">
+            <button id="mobile-menu-toggle" class="lg:hidden p-2 hover:bg-slate-150 dark:hover:bg-slate-800 rounded-lg text-slate-500">
+              <span class="text-xl">☰</span>
+            </button>
+            <div class="max-xs:hidden">
+              <h2 class="text-sm font-extrabold text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-2">
+                <span id="workspace-title-display">Office Suite Workspace</span>
+                <span class="text-[9px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 px-1.5 py-0.5 rounded font-mono uppercase">In-Memory Local Mode</span>
+              </h2>
+            </div>
+          </div>
+
+          <!-- Live clock and user status -->
+          <div class="flex items-center gap-4">
+            <div class="text-right max-sm:hidden">
+              <p id="live-clock" class="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400">June 22, 2026, 11:23:54</p>
+              <p class="text-[9px] text-slate-450 dark:text-slate-500 font-sans tracking-wider uppercase font-extrabold">Virtual Active Agent</p>
+            </div>
+            <div class="h-8.5 w-8.5 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 text-white font-bold text-xs flex items-center justify-center shadow-xs">
+              AI
+            </div>
+          </div>
+        </header>
+
+        <!-- Primary View Panels Switcher -->
+        <main class="flex-1 overflow-y-auto overflow-x-hidden p-6 md:p-8 shrink-0">
+          
+          <!-- 1. DASHBOARD VIEW -->
+          <div id="view-dashboard-panel" class="view-panel active space-y-8 animate-fade-in">
+            <!-- Modern Welcome Hero banner -->
+            <div class="relative bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl p-6 md:p-8 shadow-xl overflow-hidden">
+              <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.15),transparent_40%)]"></div>
+              <div class="relative z-10 max-w-2xl space-y-3">
+                <span class="text-[9px] bg-indigo-500/20 text-indigo-300 font-extrabold tracking-widest px-2.5 py-1 rounded-full uppercase">Workspace Portal</span>
+                <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight font-sans">Empower Your Workspace with Local AI Intelligence</h1>
+                <p class="text-xs text-slate-300 font-sans leading-relaxed">
+                  Welcome to your unified suite. Draft clean academic coursework assignments, generate professional slide presentations, maintain formulas inside responsive grids, and design formal business sheets instantly. All stored securely in memory.
+                </p>
+              </div>
+            </div>
+
+            <!-- Bento Card Grid Launcher (5 Cards) -->
+            <section class="space-y-4">
+              <h3 class="text-xs font-extrabold tracking-wider text-slate-500 dark:text-slate-400 uppercase">Interactive Office Launchers</h3>
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+                
+                <!-- launcher doc -->
+                <button id="launch-doc-btn" class="dashboard-launcher group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-550 dark:hover:border-indigo-500 text-left rounded-xl p-5 shadow-xs transition hover:shadow-md hover:-translate-y-1">
+                  <div class="mb-4 text-3xl select-none group-hover:scale-110 transition duration-300">📄</div>
+                  <h4 class="font-extrabold text-sm text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">Documents</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans mt-1">General articles, notes, abstracts & clean prose reports.</p>
+                </button>
+
+                <!-- launcher report -->
+                <button id="launch-report-btn" class="dashboard-launcher group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-550 dark:hover:border-indigo-500 text-left rounded-xl p-5 shadow-xs transition hover:shadow-md hover:-translate-y-1">
+                  <div class="mb-4 text-3xl select-none group-hover:scale-110 transition duration-300">📊</div>
+                  <h4 class="font-extrabold text-sm text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">Reports</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans mt-1">Academic papers, internship logs and project summaries.</p>
+                </button>
+
+                <!-- launcher pres -->
+                <button id="launch-pres-btn" class="dashboard-launcher group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-550 dark:hover:border-indigo-500 text-left rounded-xl p-5 shadow-xs transition hover:shadow-md hover:-translate-y-1">
+                  <div class="mb-4 text-3xl select-none group-hover:scale-110 transition duration-300">🖥️</div>
+                  <h4 class="font-extrabold text-sm text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">Presentations</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans mt-1">Slick custom layouts, key slides & presentation notes.</p>
+                </button>
+
+                <!-- launcher sheet -->
+                <button id="launch-sheet-btn" class="dashboard-launcher group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-550 dark:hover:border-indigo-500 text-left rounded-xl p-5 shadow-xs transition hover:shadow-md hover:-translate-y-1">
+                  <div class="mb-4 text-3xl select-none group-hover:scale-110 transition duration-300">🗂️</div>
+                  <h4 class="font-extrabold text-sm text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">Spreadsheets</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans mt-1">Excel budget sheets, marklists & formulas tracker.</p>
+                </button>
+
+                <!-- launcher letter -->
+                <button id="launch-letter-btn" class="dashboard-launcher group bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-indigo-550 dark:hover:border-indigo-500 text-left rounded-xl p-5 shadow-xs transition hover:shadow-md hover:-translate-y-1">
+                  <div class="mb-4 text-3xl select-none group-hover:scale-110 transition duration-300">✉️</div>
+                  <h4 class="font-extrabold text-sm text-slate-800 dark:text-slate-100 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition">Letters</h4>
+                  <p class="text-[11px] text-slate-500 dark:text-slate-400 font-sans mt-1">Formal templates, leave drafts, cover and collaboration.</p>
+                </button>
+
+              </div>
+            </section>
+
+            <!-- Bottom Dashboard Area: Recents and Favorites -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <!-- Dynamically populated Recent Files list -->
+              <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
+                    <h3 class="text-sm font-extrabold text-slate-800 dark:text-slate-100">Recent Files</h3>
+                    <span id="recent-count" class="text-[10px] bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 px-2 py-0.5 rounded font-bold font-mono">4 Files</span>
+                  </div>
+                  <div id="recent-list-container" class="space-y-2 max-h-[280px] overflow-y-auto pr-1">
+                    <!-- Dynamic Items will be rendered here by main.tsx -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dynamically filtered Favorites list -->
+              <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col justify-between">
+                <div>
+                  <div class="flex items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-3">
+                    <h3 class="text-sm font-extrabold text-slate-800 dark:text-slate-100">Favorites & Starred</h3>
+                    <span id="favorites-count" class="text-[10px] bg-amber-50 dark:bg-amber-950/30 text-amber-600 dark:text-amber-400 px-2 py-0.5 rounded font-bold font-mono">2 Stars</span>
+                  </div>
+                  <div id="favorites-list-container" class="space-y-2 max-h-[280px] overflow-y-auto pr-1">
+                    <!-- Starred Items -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. AI ASSISTANT VIEW -->
+          <div id="view-assistant-panel" class="view-panel hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col gap-1">
+              <h1 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">AI Content Intelligence Suite</h1>
+              <p class="text-xs text-slate-500 dark:text-slate-450 font-sans">Develop comprehensive structured outlines, transform summaries, and format tone instantly.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+              <!-- Left: Prompts inputs and intelligence triggers -->
+              <div class="lg:col-span-5 space-y-5">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                  <div class="flex flex-col gap-1.5 shadow-2xs">
+                    <label class="text-xs font-bold text-slate-700 dark:text-slate-350">Describe your request or paste content:</label>
+                    <textarea id="ai-input" class="w-full h-44 p-3 border border-slate-200 dark:border-slate-750 rounded-xl bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-150 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden text-xs font-sans leading-relaxed" placeholder="e.g. Write a project proposal summary for an agriculture monitoring app using IoT sensors..."></textarea>
+                  </div>
+
+                  <!-- AI Assistant Working Buttons Grid (8 buttons) -->
+                  <div class="space-y-3 pt-2">
+                    <label class="text-[10px] font-extrabold tracking-wider text-slate-450 dark:text-slate-500 uppercase">Intelligence Quick Actions</label>
+                    <div class="grid grid-cols-2 gap-2.5">
+                      <button id="ai-btn-generate" class="ai-act-btn bg-indigo-650 hover:bg-indigo-700 dark:bg-indigo-600 dark:hover:bg-indigo-700 text-white font-bold p-2.5 rounded-lg text-xs tracking-wide transition shadow-sm hover:shadow-md cursor-pointer">✨ Generate Content</button>
+                      <button id="ai-btn-rewrite" class="ai-act-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-100 font-bold p-2.5 rounded-lg text-xs tracking-wide transition border border-slate-200 dark:border-slate-700 cursor-pointer">🔄 Rewrite & Style</button>
+                      <button id="ai-btn-summarize" class="ai-act-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-100 font-bold p-2.5 rounded-lg text-xs tracking-wide transition border border-slate-200 dark:border-slate-700 cursor-pointer">📝 Summarize Text</button>
+                      <button id="ai-btn-expand" class="ai-act-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-100 font-bold p-2.5 rounded-lg text-xs tracking-wide transition border border-slate-200 dark:border-slate-700 cursor-pointer">🔍 Expand Detail</button>
+                      <button id="ai-btn-grammar" class="ai-act-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-100 font-bold p-2.5 rounded-lg text-xs tracking-wide transition border border-slate-200 dark:border-slate-700 cursor-pointer">✔️ Grammar Fix</button>
+                      <button id="ai-btn-professional" class="ai-act-btn bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-100 font-bold p-2.5 rounded-lg text-xs tracking-wide transition border border-slate-200 dark:border-slate-700 cursor-pointer">👔 Professional Tone</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Content Output and Document injection Actions -->
+              <div class="lg:col-span-7 flex flex-col">
+                <div class="bg-white dark:bg-slate-900 rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm flex-1 flex flex-col justify-between">
+                  <div>
+                    <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100 dark:border-slate-800">
+                      <h3 class="text-xs font-extrabold text-slate-800 dark:text-slate-100 tracking-wider uppercase">Active Content Output</h3>
+                      <!-- Live auto tag -->
+                      <div class="flex items-center gap-1 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-700 dark:text-indigo-400 px-2 py-0.5 rounded text-[10px] font-bold">
+                        <span>Offline Assistant</span>
+                      </div>
+                    </div>
+
+                    <!-- AI Generated output block -->
+                    <div id="ai-output-area" class="min-h-[240px] max-h-[360px] overflow-y-auto bg-slate-50 dark:bg-slate-950 p-4 border border-slate-200 dark:border-slate-750 rounded-xl text-xs font-mono leading-relaxed text-slate-800 dark:text-slate-200 select-all whitespace-pre-wrap">Your generated output will show up here. Enter a prompt to begin formatting content.</div>
+                  </div>
+
+                  <!-- Integration Actions -->
+                  <div class="pt-4 border-t border-slate-155 dark:border-slate-800/80 mt-4 space-y-3">
+                    <label class="text-[10px] font-extrabold tracking-wider text-slate-450 dark:text-slate-500 uppercase">Inject generated content into workspace:</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                      <button id="ai-btn-insert" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold p-2.5 rounded-lg text-xs transition shadow-sm cursor-pointer flex items-center justify-center gap-1.5">
+                        <span>📥 Append to Doc</span>
+                      </button>
+                      <button id="ai-btn-replace" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold p-2.5 rounded-lg text-xs transition shadow-sm cursor-pointer flex items-center justify-center gap-1.5">
+                        <span>📑 Replace Doc</span>
+                      </button>
+                      <button id="ai-btn-copy" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-750 text-slate-800 dark:text-slate-150 font-bold p-2.5 rounded-lg text-xs transition border border-slate-200 dark:border-slate-700 cursor-pointer flex items-center justify-center gap-1.5">
+                        <span>📋 Copy Output</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. DOCUMENTS & REPORTS VIEW -->
+          <div id="view-documents-panel" class="view-panel hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-155 dark:border-slate-800/80 pb-4">
+              <div class="flex flex-col gap-0.5">
+                <h1 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-2">
+                  <span>Smart Word Processor</span>
+                  <span id="doc-active-title" class="text-xs text-indigo-600 dark:text-indigo-400 font-sans font-bold italic">/ Draft Article</span>
+                </h1>
+                <p class="text-[11px] text-slate-500 dark:text-slate-450 font-sans">Prepare beautiful assignments, generate custom formatted reports, and print high-fidelity cover sheets immediately.</p>
+              </div>
+
+              <!-- Export / Save controls -->
+              <div class="flex items-center gap-2 max-sm:w-full max-sm:overflow-x-auto pb-1">
+                <button id="doc-save-btn" class="bg-indigo-50 hover:bg-indigo-100 dark:bg-slate-850 dark:hover:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-bold px-3 py-1.8 rounded-lg text-xs border border-indigo-100 dark:border-slate-750 transition flex items-center gap-1 cursor-pointer">💾 Save JSON</button>
+                <button id="doc-open-btn-trigger" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-850 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold px-3 py-1.8 rounded-lg text-xs border border-slate-200 dark:border-slate-700 transition flex items-center gap-1 cursor-pointer">📂 Load JSON</button>
+                <!-- Hidden document loader input -->
+                <input id="doc-open-file-input" type="file" class="hidden" accept=".json" />
+                <button id="doc-toggle-preview" class="bg-slate-800 hover:bg-slate-900 text-white font-bold px-3 py-1.8 rounded-lg text-xs transition flex items-center gap-1 cursor-pointer">👁️ Preview Mode</button>
+              </div>
+            </div>
+
+            <!-- Templates strip -->
+            <div class="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-none border-b border-dashed border-slate-200 dark:border-slate-800">
+              <span class="text-[10px] font-extrabold text-slate-450 dark:text-slate-500 whitespace-nowrap uppercase mr-2">Templates:</span>
+              <button class="doc-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="general">📄 General document</button>
+              <button class="doc-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="project_report">📊 Project Report</button>
+              <button class="doc-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="internship_report">🎓 Internship Log</button>
+              <button class="doc-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="research_report">🔬 Research Report</button>
+            </div>
+
+            <!-- Two Column Layout: Page Sidebar Thumbnails on left, cover-page + editor on right -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              <!-- Left Sidebar Column: Page Thumbnails navigator -->
+              <div class="lg:col-span-2 space-y-4">
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 space-y-3">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-extrabold text-slate-550 dark:text-slate-400 uppercase tracking-widest">Pages Outline</span>
+                    <button id="doc-btn-add-page" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded p-1 shadow-xs font-semibold cursor-pointer text-xs flex items-center justify-center gap-0.5">
+                      <span>➕ Page</span>
+                    </button>
+                  </div>
+                  
+                  <!-- Thumbnail items container -->
+                  <div id="doc-thumbnails-container" class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                    <!-- Dynamic Page Blocks -->
+                  </div>
+
+                  <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-1.5 text-[10px] text-slate-500">
+                    <button id="doc-btn-duplicate-page" class="w-full text-left font-bold hover:text-indigo-600 dark:hover:text-indigo-400 py-1 transition flex items-center gap-1 cursor-pointer">📑 Duplicate Page</button>
+                    <button id="doc-btn-delete-page" class="w-full text-left font-bold text-rose-500 hover:text-rose-700 py-1 transition flex items-center gap-1 cursor-pointer">🗑️ Delete Page</button>
+                    <div class="grid grid-cols-2 gap-1 pt-1">
+                      <button id="doc-btn-move-left" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-center font-bold py-1 px-1 rounded transition text-[9px] cursor-pointer">⬅️ Up</button>
+                      <button id="doc-btn-move-right" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-center font-bold py-1 px-1 rounded transition text-[9px] cursor-pointer">➡️ Down</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Main Column: Cover page parameters and rich contenteditable paper -->
+              <div class="lg:col-span-10 space-y-6">
+                
+                <!-- Expanded Cover Page Generator Accordion -->
+                <details class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xs group" open>
+                  <summary class="p-4 font-extrabold text-xs tracking-wider text-slate-700 dark:text-slate-200 group-open:border-b group-open:border-slate-100 dark:group-open:border-slate-800 cursor-pointer list-none flex items-center justify-between select-none">
+                    <span class="flex items-center gap-2">📂 Cover Page Metadata Generator</span>
+                    <span class="text-slate-450 text-[10px] group-open:rotate-180 transition">▼</span>
+                  </summary>
+                  <div class="p-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 bg-slate-50/50 dark:bg-slate-900/40">
+                    <div class="flex flex-col gap-1">
+                      <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400">Project / Report Title</label>
+                      <input id="cover-title" class="p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-800 dark:text-slate-150" value="DEVELOPMENT OF DEEP SENSOR CHANNELS" />
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400">Author / Student Name</label>
+                      <input id="cover-student" class="p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-800 dark:text-slate-150" value="J. Jahnavi" />
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400">Project Guide / Instructor</label>
+                      <input id="cover-guide" class="p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-800 dark:text-slate-150" value="Dr. Robert Vance" />
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400">College / Organization</label>
+                      <input id="cover-college" class="p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-800 dark:text-slate-150" value="National Institute of Technology" />
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400">Department / Division</label>
+                      <input id="cover-department" class="p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-800 dark:text-slate-150" value="Computer Science and Systems" />
+                    </div>
+                    <div class="flex flex-col gap-1">
+                      <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400">Publication Date</label>
+                      <input id="cover-date" type="date" class="p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-800 dark:text-slate-150" value="2026-06-22" />
+                    </div>
+                    <div class="sm:col-span-2 md:col-span-3 pt-2 text-right">
+                      <button id="doc-btn-insert-cover" class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-4 py-2 rounded-lg text-xs shadow-xs transition cursor-pointer">Generate Cover Page at Document Start</button>
+                    </div>
+                  </div>
+                </details>
+
+                <!-- Custom Rich Text Editing toolbar widget -->
+                <div id="doc-editor-toolbar" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-2.5 flex flex-wrap items-center gap-1.5 shadow-xs">
+                  <button id="doc-edit-undo" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 font-bold rounded cursor-pointer" title="Undo">↩️</button>
+                  <button id="doc-edit-redo" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 font-bold rounded cursor-pointer" title="Redo">↪️</button>
+                  <span class="w-px h-6 bg-slate-200 dark:bg-slate-800"></span>
+                  <button id="doc-edit-bold" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 font-bold rounded cursor-pointer" title="Bold"><b>B</b></button>
+                  <button id="doc-edit-italic" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 italic font-bold rounded cursor-pointer" title="Italic"><i>I</i></button>
+                  <button id="doc-edit-underline" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 underline font-bold rounded cursor-pointer" title="Underline"><u>U</u></button>
+                  <span class="w-px h-6 bg-slate-200 dark:bg-slate-800"></span>
+                  <button id="doc-edit-bullets" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 font-bold rounded cursor-pointer" title="Bullet List">● List</button>
+                  <button id="doc-edit-numbers" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 font-bold rounded cursor-pointer" title="Numbered List">1. List</button>
+                  <span class="w-px h-6 bg-slate-200 dark:bg-slate-800"></span>
+                  <button id="doc-edit-image" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 font-bold rounded cursor-pointer flex items-center gap-1" title="Insert Image Image">🖼️ Image</button>
+                  <input id="doc-image-upload-helper" type="file" class="hidden" accept="image/*" />
+                  <button id="doc-edit-table" class="tool-btn hover:bg-slate-100 dark:hover:bg-slate-800 p-2.5 text-xs text-slate-700 dark:text-slate-300 font-bold rounded cursor-pointer flex items-center gap-1" title="Insert Table Elements">📊 Table</button>
+                </div>
+
+                <!-- Live Document Sheets Container (Displays current content editable page) -->
+                <div class="relative min-h-[500px]">
+                  <div id="doc-edit-sheet-canvas" class="w-full max-w-[816px] min-h-[1056px] mx-auto bg-white text-slate-900 shadow-md p-14 md:p-16 border border-slate-205 focus:outline-hidden prose prose-sm prose-slate" contenteditable="true" aria-multiline="true">
+                    <!-- Page content will load here dynamically -->
+                  </div>
+
+                  <!-- Read-only Preview Layer -->
+                  <div id="doc-preview-layer" class="hidden w-full max-w-[816px] mx-auto bg-white text-slate-900 shadow-md p-14 md:p-16 border border-slate-255 prose prose-sm prose-slate overflow-y-auto">
+                    <!-- Cloned content displayed in read-only format -->
+                  </div>
+                </div>
+
+                <!-- Stats Footer Panel -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-205 dark:border-slate-800 rounded-xl p-3 px-5 flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+                  <div class="flex items-center gap-4">
+                    <span class="font-semibold"><span id="doc-stat-pages">1</span> Page(s)</span>
+                    <span class="font-semibold"><span id="doc-stat-words">0</span> Words</span>
+                    <span class="font-semibold"><span id="doc-stat-chars">0</span> Characters</span>
+                  </div>
+
+                  <!-- Quick Exports buttons grid -->
+                  <div class="flex items-center gap-1 max-xs:flex-wrap">
+                    <span class="font-extrabold pr-1 text-[10px] tracking-wider uppercase text-slate-450">Export:</span>
+                    <button id="doc-export-pdf" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold px-2 py-1.5 rounded text-[10px] border border-rose-100 cursor-pointer">PDF Print</button>
+                    <button id="doc-export-docx" class="bg-indigo-50 hover:bg-indigo-105 text-indigo-700 font-bold px-2 py-1.5 rounded text-[10px] border border-indigo-100 cursor-pointer">DOCX Draft</button>
+                    <button id="doc-export-txt" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 font-bold px-2 py-1.5 rounded text-[10px] text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 cursor-pointer">TXT Plain</button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+          <!-- 4. PRESENTATIONS VIEW -->
+          <div id="view-presentations-panel" class="view-panel hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-155 dark:border-slate-800/80 pb-4">
+              <div class="flex flex-col gap-0.5">
+                <h1 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-2">
+                  <span>Power Slide Presentation</span>
+                  <span id="pres-active-title" class="text-xs text-indigo-600 dark:text-indigo-400 font-sans font-bold italic">/ Pitch Slideshow</span>
+                </h1>
+                <p class="text-[11px] text-slate-500 dark:text-slate-450 font-sans">Craft technology outlines, pitch decks, and academic summaries. Slide layout engine updates slides inside clean grids.</p>
+              </div>
+
+              <!-- Export Present keys -->
+              <div class="flex items-center gap-2">
+                <button id="pres-fullscreen-trigger" class="bg-indigo-650 hover:bg-indigo-700 text-white font-extrabold px-3 py-1.8 rounded-lg text-xs shadow-sm transition flex items-center gap-1 cursor-pointer">▶️ Slide Show</button>
+                <button id="pres-export-pptx" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-850 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold px-3 py-1.8 rounded-lg text-xs border border-slate-200 dark:border-slate-700 cursor-pointer">📥 PPTX Outline</button>
+                <button id="pres-export-pdf" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-850 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold px-3 py-1.8 rounded-lg text-xs border border-slate-200 dark:border-slate-700 cursor-pointer">🖨️ PDF Print</button>
+              </div>
+            </div>
+
+            <!-- Templates strip -->
+            <div class="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-none border-b border-dashed border-slate-200 dark:border-slate-800">
+              <span class="text-[10px] font-extrabold text-slate-450 dark:text-slate-500 whitespace-nowrap uppercase mr-2">Themes:</span>
+              <button class="pres-theme-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-theme="academic">🎓 Academic Theme</button>
+              <button class="pres-theme-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-theme="defense">🛡️ Thesis Defense</button>
+              <button class="pres-theme-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-theme="technology">🚀 Tech Trends</button>
+              <button class="pres-theme-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-theme="business">💼 Business Venture</button>
+              <button class="pres-theme-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-theme="agriculture">🌱 Agriculture Tech</button>
+            </div>
+
+            <!-- Workspace: Slides Navigation on Left, Editor Page Canvas on Center-Right -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+              
+              <!-- Left: Slides List Thumbnails panel -->
+              <div class="lg:col-span-3 space-y-4">
+                <!-- Presentation AI Assistant Panel -->
+                <div class="bg-indigo-50/50 dark:bg-slate-900/50 border border-indigo-100 dark:border-slate-800 rounded-2xl p-4 space-y-3 shadow-xs">
+                  <div class="flex items-center gap-1.5">
+                    <span class="text-xs">✨</span>
+                    <span class="text-[10px] font-extrabold text-indigo-700 dark:text-indigo-400 uppercase tracking-widest">Presentation AI</span>
+                  </div>
+                  <input id="pres-ai-topic" type="text" class="w-full p-2 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-850 dark:text-slate-150 focus:outline-hidden focus:ring-1 focus:ring-indigo-550" placeholder="Enter topic (e.g. AgriTech IoT)" />
+                  <button id="pres-ai-generate-btn" class="w-full bg-indigo-650 hover:bg-indigo-700 text-white font-bold p-1.5 rounded-lg text-xs transition cursor-pointer font-sans shadow-sm">✨ Generate Deck</button>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4 space-y-3 shadow-xs">
+                  <div class="flex items-center justify-between">
+                    <span class="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest">Deck Outline</span>
+                    <button id="pres-btn-add-slide" class="bg-indigo-600 hover:bg-indigo-700 text-white rounded px-2 py-1 text-xs font-bold cursor-pointer transition">➕ Slide</button>
+                  </div>
+
+                  <!-- Vertical list of slides thumbs -->
+                  <div id="pres-thumbs-container" class="space-y-2.5 max-h-[340px] overflow-y-auto pr-1">
+                    <!-- Dynamic Slide Cells -->
+                  </div>
+
+                  <div class="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-1.5 text-[10px] text-slate-500">
+                    <button id="pres-btn-duplicate" class="w-full text-left font-bold hover:text-indigo-600 py-1 transition cursor-pointer">📑 Duplicate Slide</button>
+                    <button id="pres-btn-delete" class="w-full text-left font-bold text-rose-500 hover:text-rose-700 py-1 transition cursor-pointer">🗑️ Delete Slide</button>
+                    <div class="grid grid-cols-2 gap-1.5 pt-1">
+                      <button id="pres-btn-move-up" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-center font-bold py-1 rounded transition text-[9px] cursor-pointer">⬅️ Move Up</button>
+                      <button id="pres-btn-move-down" class="bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-center font-bold py-1 rounded transition text-[9px] cursor-pointer">➡️ Move Down</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right: Slide Editor & Layout select canvas -->
+              <div class="lg:col-span-9 space-y-6">
+                <!-- Select Layout dropdown buttons strip -->
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-3 flex flex-wrap items-center gap-1.5 shadow-2xs">
+                  <span class="text-[9px] font-extrabold uppercase text-slate-450 mr-2">Slide Layout:</span>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="title">Title Slide</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="divider">Section Divider</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="text-image">Text + Image</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="two-column">Two Column</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="timeline">Timeline</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="process">Process Flow</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="stats">Statistics</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="comparison">Comparison Layout</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="conclusion">Conclusion</button>
+                  <button class="slide-layout-btn bg-slate-50 dark:bg-slate-950 border border-slate-100 dark:border-slate-850 px-2.5 py-1 text-[10px] font-extrabold rounded-md hover:bg-indigo-50 hover:text-indigo-650 tracking-tight transition" data-layout="thankyou">Thank You</button>
+                </div>
+
+                <!-- Slide visual simulator sheet -->
+                <div class="relative">
+                  <div id="slide-visual-stage" class="w-full aspect-video md:max-w-[760px] mx-auto bg-gradient-to-br from-indigo-900 to-slate-950 text-white rounded-2xl p-10 flex flex-col justify-between shadow-lg relative border border-indigo-950 overflow-hidden">
+                    <!-- Dynamic absolute glow spots -->
+                    <div class="absolute -top-16 -right-16 h-48 w-48 rounded-full bg-indigo-505/10 blur-2xl"></div>
+                    <div class="absolute -bottom-16 -left-16 h-48 w-48 rounded-full bg-violet-500/10 blur-2xl"></div>
+
+                    <!-- Slide Contents fields mapping -->
+                    <input id="slide-edit-title" class="bg-transparent border-b border-white/10 hover:border-white/20 focus:border-indigo-400 focus:outline-hidden text-2xl font-extrabold tracking-tight text-white w-full pb-2" placeholder="Slide Heading Title" value="Modern Presentation Title" />
+                    
+                    <div class="flex-1 mt-6">
+                      <!-- Active content container depending on layout -->
+                      <textarea id="slide-edit-body" class="w-full h-full bg-transparent border border-dashed border-white/5 hover:border-white/10 focus:border-indigo-400 focus:outline-hidden p-3 text-xs leading-relaxed text-slate-200 font-sans resize-none" placeholder="Bullet features list (type markdown list or separate paragraphs...)"></textarea>
+                    </div>
+
+                    <div class="flex items-center justify-between text-[10px] text-indigo-300 font-sans pt-3 border-t border-white/5 active-layout-badge">
+                      <span id="slide-visual-layout-tag">LAYOUT: TITLE SLIDE</span>
+                      <span id="slide-visual-index-tag">Slide 1 of 1</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Speaker notes generation block -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-850 rounded-2xl p-5 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-2">
+                      <h4 class="text-xs font-extrabold text-slate-800 dark:text-slate-100 tracking-wider uppercase">Slide Presenter Intel</h4>
+                      <button id="pres-btn-generate-notes" class="bg-indigo-50 hover:bg-indigo-100 dark:bg-slate-800 dark:hover:bg-slate-750 text-indigo-700 dark:text-indigo-400 font-extrabold px-2.5 py-1 text-[10px] rounded-md transition shadow-2xs cursor-pointer">🔊 AI Speaker Notes</button>
+                    </div>
+                    <div id="slide-speaker-notes" class="text-xs text-slate-600 dark:text-slate-350 leading-relaxed font-sans min-h-[100px] h-[100px] bg-slate-50/50 dark:bg-slate-950 p-3 rounded-xl border border-slate-155 dark:border-slate-800/80 overflow-y-auto">No speaker notes generated. Select a layout or click the assistant button to auto-synthesize speaking loops.</div>
+                  </div>
+
+                  <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-850 rounded-2xl p-5 shadow-2xs space-y-3">
+                    <div class="flex items-center justify-between border-b border-slate-50 dark:border-slate-800 pb-2">
+                      <h4 class="text-xs font-extrabold text-slate-800 dark:text-slate-100 tracking-wider uppercase">Slide Talking Outlines</h4>
+                      <button id="pres-btn-talking-points" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 font-extrabold px-2.5 py-1 text-[10px] rounded-md transition shadow-2xs cursor-pointer">💡 Talking Details</button>
+                    </div>
+                    <div id="slide-key-points" class="text-xs text-slate-600 dark:text-slate-350 leading-relaxed font-sans min-h-[100px] h-[100px] bg-slate-50/50 dark:bg-slate-950 p-3 rounded-xl border border-slate-155 dark:border-slate-800/80 overflow-y-auto">Talking guidelines will render here on prompt sync.</div>
+                  </div>
+                </div>
+
+              </div>
+              
+            </div>
+          </div>
+
+          <!-- 5. SPREADSHEETS VIEW -->
+          <div id="view-spreadsheets-panel" class="view-panel hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-155 dark:border-slate-800/80 pb-4">
+              <div class="flex flex-col gap-0.5">
+                <h1 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-2">
+                  <span>Responsive Ledger Spreadsheet</span>
+                  <span id="sheet-active-title" class="text-xs text-indigo-600 dark:text-indigo-400 font-sans font-bold italic">/ Expense Ledger</span>
+                </h1>
+                <p class="text-[11px] text-slate-500 dark:text-slate-450 font-sans">Manage database tables, attendance trackers, budgets, and marks lists. Editable grid cells bind results securely in-memory.</p>
+              </div>
+
+              <!-- Export spreadsheet choices -->
+              <div class="flex items-center gap-2">
+                <button id="sheet-save-btn" class="bg-indigo-50 hover:bg-indigo-100 dark:bg-slate-850 dark:hover:bg-slate-800 text-indigo-700 dark:text-indigo-400 font-bold px-3 py-1.8 rounded-lg text-xs border border-indigo-100 dark:border-slate-750 transition flex items-center gap-1 cursor-pointer">💾 Save JSON</button>
+                <button id="sheet-open-btn-trigger" class="bg-slate-105 hover:bg-slate-205 dark:bg-slate-850 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-205 font-bold px-3 py-1.8 rounded-lg text-xs border border-slate-205 dark:border-slate-705 transition flex items-center gap-1 cursor-pointer">📂 Load JSON</button>
+                <input id="sheet-open-file-input" type="file" class="hidden" accept=".json" />
+                <button id="sheet-export-csv" class="bg-slate-850 hover:bg-slate-900 text-white font-bold px-3 py-1.8 rounded-lg text-xs transition flex items-center gap-1 cursor-pointer">📥 Download CSV</button>
+              </div>
+            </div>
+
+            <!-- Templates strip -->
+            <div class="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-none border-b border-dashed border-slate-200 dark:border-slate-800">
+              <span class="text-[10px] font-extrabold text-slate-450 dark:text-slate-500 whitespace-nowrap uppercase mr-2">Templates:</span>
+              <button class="sheet-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="budget">💰 Monthly Budget</button>
+              <button class="sheet-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="attendance">📅 Student Attendance</button>
+              <button class="sheet-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="marks">📝 Semester Marks</button>
+              <button class="sheet-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="expense">💳 Expense Tracker</button>
+            </div>
+
+            <!-- Spreadsheet Grid Wrapper -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+              <!-- Controls bar -->
+              <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <!-- Size modifier buttons -->
+                <div class="flex items-center gap-1.5">
+                  <button id="sheet-grid-add-row" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-1.5 px-3 rounded-lg cursor-pointer transition shadow-xs">➕ Add Row</button>
+                  <button id="sheet-grid-del-row" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs py-1.5 px-3 rounded-lg cursor-pointer transition">🗑️ Del Row</button>
+                  <span class="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-1"></span>
+                  <button id="sheet-grid-add-col" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs py-1.5 px-3 rounded-lg cursor-pointer transition shadow-xs">➕ Add Col</button>
+                  <button id="sheet-grid-del-col" class="bg-rose-50 hover:bg-rose-100 text-rose-700 font-bold text-xs py-1.5 px-3 rounded-lg cursor-pointer transition">🗑️ Del Col</button>
+                </div>
+
+                <div class="text-[10px] font-sans font-bold text-slate-450 dark:text-slate-500">
+                  <span>Double-click cells to modify. All updates trigger auto-save locally.</span>
+                </div>
+              </div>
+
+              <!-- Interactive LEDGER Grid layout -->
+              <div class="w-full overflow-x-auto border border-slate-200 dark:border-slate-850 rounded-xl">
+                <table id="sheet-active-table-element" class="w-full text-xs text-left border-collapse font-sans min-w-[700px]">
+                  <!-- headers and rows are dynamically formatted -->
+                </table>
+              </div>
+            </div>
+
+            <!-- AI Spreadsheet Assistant Card -->
+            <div class="bg-indigo-50/50 dark:bg-indigo-950/25 border border-indigo-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4">
+              <div class="flex items-center gap-2">
+                <span class="text-base text-indigo-600 dark:text-indigo-400">✨</span>
+                <h3 class="text-xs font-extrabold text-slate-800 dark:text-slate-100 tracking-wider uppercase">AI Spreadsheet Formula & Forecast Assistant</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                <div class="md:col-span-9">
+                  <input id="sheet-ai-prompt" type="text" class="w-full p-2.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-xl text-xs text-slate-850 dark:text-slate-150 focus:outline-hidden focus:ring-1 focus:ring-indigo-550" placeholder="e.g. Calculate a 15% safety buffer on the budget entries and append a consolidated summary row..." />
+                </div>
+                <div class="md:col-span-3">
+                  <button id="sheet-ai-trigger" class="w-full bg-indigo-650 hover:bg-indigo-700 text-white font-bold p-2.5 rounded-xl text-xs transition cursor-pointer font-sans shadow-sm">Generate</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6. LETTERS VIEW -->
+          <div id="view-letters-panel" class="view-panel hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-155 dark:border-slate-800/80 pb-4">
+              <div class="flex flex-col gap-0.5">
+                <h1 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight flex items-center gap-2">
+                  <span>Formal Letter Formatter</span>
+                  <span id="letter-active-title" class="text-xs text-indigo-600 dark:text-indigo-400 font-sans font-bold italic">/ Business Correspondence</span>
+                </h1>
+                <p class="text-[11px] text-slate-500 dark:text-slate-450 font-sans">Draft leave approvals, corporate correspondence and formal letters with symmetrical structural layout styles.</p>
+              </div>
+
+              <!-- Export letter -->
+              <div class="flex items-center gap-2">
+                <button id="letter-export-pdf" class="bg-slate-850 hover:bg-slate-900 text-white font-bold px-3 py-1.8 rounded-lg text-xs transition border border-transparent shadow-xs cursor-pointer">🖨️ PDF Print</button>
+                <button id="letter-export-docx" class="bg-slate-100 hover:bg-slate-200 dark:bg-slate-850 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold px-3 py-1.8 rounded-lg text-xs border border-slate-200 dark:border-slate-700 cursor-pointer">📥 Download DOCX</button>
+              </div>
+            </div>
+
+            <!-- Templates strip -->
+            <div class="flex items-center gap-2 pb-2 overflow-x-auto scrollbar-none border-b border-dashed border-slate-200 dark:border-slate-800">
+              <span class="text-[10px] font-extrabold text-slate-450 dark:text-slate-500 whitespace-nowrap uppercase mr-2">Templates:</span>
+              <button class="letter-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="formal">✉️ Formal Letter</button>
+              <button class="letter-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="leave">📅 Leave Application</button>
+              <button class="letter-tpl-btn bg-white dark:bg-slate-900 hover:bg-indigo-50 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 px-3 py-1.5 text-xs rounded-lg font-bold transition whitespace-nowrap cursor-pointer" data-tpl="business">💼 Business Proposal</button>
+            </div>
+
+            <!-- Letters Formatting Toolbar -->
+            <div class="flex flex-wrap items-center gap-1.5 p-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl max-w-[760px] mx-auto mb-4">
+              <button id="letter-edit-bold" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-md text-xs font-bold text-slate-700 dark:text-slate-350 cursor-pointer" title="Bold"><b>B</b></button>
+              <button id="letter-edit-italic" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-md text-xs font-bold text-slate-700 dark:text-slate-350 cursor-pointer" title="Italic"><i>I</i></button>
+              <button id="letter-edit-underline" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-md text-xs font-bold text-slate-700 dark:text-slate-350 cursor-pointer" title="Underline"><u>U</u></button>
+              <span class="w-px h-4 bg-slate-200 dark:bg-slate-800 mx-1"></span>
+              <button id="letter-edit-align-left" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-md text-[11px] font-extrabold text-slate-700 dark:text-slate-350 cursor-pointer flex items-center gap-1" title="Align Left">⬅️ Left</button>
+              <button id="letter-edit-align-center" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-md text-[11px] font-extrabold text-slate-700 dark:text-slate-350 cursor-pointer flex items-center gap-1" title="Align Center">↔️ Center</button>
+              <button id="letter-edit-align-right" class="p-1.5 hover:bg-slate-200 dark:hover:bg-slate-800 rounded-md text-[11px] font-extrabold text-slate-700 dark:text-slate-350 cursor-pointer flex items-center gap-1" title="Align Right">➡️ Right</button>
+              <span class="w-px h-4 bg-slate-200 dark:bg-slate-800 mx-1"></span>
+              <select id="letter-edit-font-size" class="p-1 text-[10px] bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-md text-slate-700 dark:text-slate-300 focus:outline-hidden cursor-pointer">
+                <option value="1">Small</option>
+                <option value="3" selected>Normal</option>
+                <option value="4">Medium</option>
+                <option value="5">Large</option>
+                <option value="6">Extra Large</option>
+              </select>
+            </div>
+
+            <!-- Letter Sheet Paper (Contenteditable Canvas) -->
+            <div class="bg-white text-slate-900 shadow-md max-w-[760px] mx-auto p-14 md:p-16 border border-slate-205 aspect-[1/1.4] min-h-[960px] transition duration-300">
+              <div id="letter-edit-sheet-canvas" class="w-full h-full focus:outline-hidden prose prose-sm prose-slate" contenteditable="true">
+                <!-- Letter Content -->
+              </div>
+            </div>
+
+            <!-- AI Letter Generator Helper -->
+            <div class="bg-indigo-50/50 dark:bg-indigo-950/25 border border-indigo-100 dark:border-slate-800 rounded-2xl p-6 shadow-sm space-y-4 max-w-[760px] mx-auto">
+              <div class="flex items-center gap-2">
+                <span class="text-base text-indigo-600 dark:text-indigo-400">✨</span>
+                <h3 class="text-xs font-extrabold text-slate-800 dark:text-slate-100 tracking-wider uppercase">AI Prompt Letter Drafter</h3>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                <div class="md:col-span-9">
+                  <input id="letter-ai-prompt" type="text" class="w-full p-2.5 bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-xl text-xs text-slate-850 dark:text-slate-150 focus:outline-hidden focus:ring-1 focus:ring-indigo-550" placeholder="e.g. Draft a professional cover letter for an internship supervisor expressing gratitude..." />
+                </div>
+                <div class="md:col-span-3">
+                  <button id="letter-ai-trigger" class="w-full bg-indigo-650 hover:bg-indigo-700 text-white font-bold p-2.5 rounded-xl text-xs transition cursor-pointer font-sans shadow-sm">Rewrite / Draft Letter</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7. PROJECTS PANEL -->
+          <div id="view-projects-panel" class="view-panel hidden space-y-6 animate-fade-in">
+            <div class="flex flex-col gap-1">
+              <h1 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">Project Management Namespace</h1>
+              <p class="text-xs text-slate-500 dark:text-slate-450 font-sans">Group files under specific project categories, view directories and export all bundled resources into single packages.</p>
+            </div>
+
+            <!-- Create new Project Panel -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 shadow-xs select-none">
+              <div class="flex flex-col sm:flex-row items-end gap-4">
+                <div class="flex-1 flex flex-col gap-1 w-full shadow-2xs">
+                  <label class="text-[10px] font-bold text-slate-600 dark:text-slate-400">Add New Project Folder Name:</label>
+                  <input id="project-new-name-input" class="w-full p-2.5 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-750 rounded-lg text-xs text-slate-800 dark:text-slate-150 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden" placeholder="e.g. IoT Agriculture Research Thesis..." />
+                </div>
+                <button id="project-btn-create" class="bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold px-5 py-3 rounded-lg text-xs tracking-wide transition shadow-sm hover:shadow-md cursor-pointer whitespace-nowrap">📁 Create Project Namespace</button>
+              </div>
+            </div>
+
+            <!-- Active folders List grid -->
+            <div class="space-y-4">
+              <h3 class="text-xs font-extrabold tracking-wider text-slate-500 dark:text-slate-450 uppercase">Active Workspace Projects</h3>
+              <div id="projects-grid-container" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically parsed project cards -->
+              </div>
+            </div>
+          </div>
+
+          <!-- 8. FILES DATABASE VIEW -->
+          <div id="view-files-panel" class="view-panel hidden space-y-6 animate-fade-in font-sans">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-155 dark:border-slate-800/80 pb-4">
+              <div class="flex flex-col gap-0.5">
+                <h1 class="text-xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">In-Memory Files Database</h1>
+                <p class="text-xs text-slate-500 dark:text-slate-450">List, search, filter, rename and remove files stored in simulated virtual active workspace buffers.</p>
+              </div>
+
+              <!-- Quick files filters controls -->
+              <div class="flex flex-col sm:flex-row items-center gap-2 w-full sm:w-auto">
+                <select id="files-type-filter-select" class="p-2 text-xs bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-slate-700 dark:text-slate-300 focus:outline-hidden cursor-pointer w-full sm:w-36">
+                  <option value="all">📁 All Types</option>
+                  <option value="document">📄 Documents</option>
+                  <option value="presentation">🖥️ Presentations</option>
+                  <option value="spreadsheet">🗂️ Spreadsheets</option>
+                  <option value="letter">✉️ Letters</option>
+                </select>
+                <div class="relative w-full sm:w-64">
+                  <input id="files-search-query-field" class="w-full p-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg text-xs text-slate-800 dark:text-slate-150 pl-8 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden" placeholder="Filter files by label name..." />
+                  <span class="absolute left-2.5 top-2.5 text-xs">🔍</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Interactive database items list table wrapper -->
+            <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden shadow-sm">
+              <div class="w-full overflow-x-auto">
+                <table class="w-full text-left text-xs border-collapse">
+                  <thead>
+                    <tr class="bg-slate-50/75 dark:bg-slate-950/20 text-slate-500 border-b border-slate-100 dark:border-slate-850 font-bold">
+                      <th class="p-3.5 pl-6">Label Name</th>
+                      <th class="p-3.5">Type</th>
+                      <th class="p-3.5">Auto-Save Date</th>
+                      <th class="p-3.5">Favorite</th>
+                      <th class="p-3.5 text-right pr-6">Action options</th>
+                    </tr>
+                  </thead>
+                  <tbody id="files-table-tbody" class="divide-y divide-slate-100 dark:divide-slate-850">
+                    <!-- Files data list rows will generate here -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </main>
+      </div>
+
+    </div>
+
+    <!-- Presentation fullscreen presentation mode portal wrapper -->
+    <div id="presentation-render-portal" class="fixed inset-0 bg-slate-950 text-white z-50 flex-col items-center justify-between p-12 transition duration-500 select-none hidden">
+      <!-- Fullscreen banner top -->
+      <div class="w-full flex items-center justify-between border-b border-white/10 pb-4 text-xs font-semibold uppercase tracking-wider text-indigo-400">
+        <span id="pres-portal-active-deck">Deck - Pitch Presentation</span>
+        <button id="pres-portal-exit-trigger" class="bg-white/10 hover:bg-white/20 text-white rounded-lg px-3 py-1 font-extrabold cursor-pointer transition">✕ Exit Presentation</button>
+      </div>
+
+      <!-- Slide content wrapper inside aspect display -->
+      <div id="pres-portal-content-wrapper" class="flex-1 w-full max-w-5xl my-8 flex flex-col justify-center text-center px-6 relative">
+        <h1 id="pres-portal-active-heading" class="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-6">Introduction to AI Office Suite</h1>
+        <!-- Body structure -->
+        <div id="pres-portal-body-wrapper" class="text-base md:text-lg text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto whitespace-pre-line text-center">
+          Draft academic courses, design budgets, and coordinate letters with beautiful layouts.
+        </div>
+      </div>
+
+      <!-- Slides navigation controls bottom -->
+      <div class="w-full flex items-center justify-between max-w-3xl mx-auto border-t border-white/10 pt-4">
+        <button id="pres-portal-btn-prev" class="bg-white/10 hover:bg-white/20 hover:scale-105 active:scale-95 text-white font-bold p-3 rounded-lg text-xs transition cursor-pointer">◀ Previous Slide</button>
+        <span id="pres-portal-page-indicator" class="text-xs text-indigo-300 font-mono font-bold tracking-widest">SLIDE 1 OF 5</span>
+        <button id="pres-portal-btn-next" class="bg-indigo-600 hover:bg-indigo-700 hover:scale-105 active:scale-95 text-white font-bold p-3 rounded-lg text-xs transition shadow-sm cursor-pointer">Next Slide ▶</button>
+      </div>
+    </div>
+
+    <!-- Compile-Safe Client Execution Hook -->
+    <script type="module" src="/src/main.tsx"></script>
+    
+  </body>
+</html>
